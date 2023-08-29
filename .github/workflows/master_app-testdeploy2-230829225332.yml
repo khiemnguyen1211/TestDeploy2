@@ -1,4 +1,4 @@
-name: Build and deploy Node.js app to Azure Web App - app-TestDeploy2-230829225332
+name: Deploy Node.js app to Azure Web App - app-TestDeploy2-230829225332
 
 on:
   push:
@@ -7,23 +7,12 @@ on:
   workflow_dispatch:
 
 jobs:
-  build-and-deploy:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v2
-        with:
-          node-version: '14'  # Use the desired Node.js version
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Build and package application
-        run: npm run build  # Use the appropriate build command
 
       - name: Deploy to Azure Web App
         uses: azure/webapps-deploy@v2
@@ -31,4 +20,4 @@ jobs:
           app-name: 'app-TestDeploy2-230829225332'
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_CCEB9ED233584A9B98F80A32DEA35C02 }}
-          package: '.'  # Specify the path to the built application files
+          package: '.'  # Specify the path to your application files (e.g., '.' for the root directory)
